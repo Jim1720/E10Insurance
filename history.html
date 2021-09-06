@@ -1,0 +1,211 @@
+ 
+ <!DOCTYPE html>
+ <html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="history"> 
+
+
+    <!-- research server side events for the buttons : pay and adjust. -->
+
+
+<form method="post" th:object="${history}"  th:action="@{/history}"> 
+
+<div class="container" id="onHistory"> 
+
+    <br> 
+    
+    <h2 class='starttitle'>Claim History Screen</h2>  
+    
+           <a th:href="@{/menu}"  style='margin-left: 30px' class="btn btn-primary st1 b1"> Menu </a>   
+           
+           <a th:href="@{/claim}"  style='margin-left: 30px' class="btn btn-primary st1 b1"> New </a>  
+
+           <div class="row" style="margin-top:20px" id="onHistory">
+                 
+                <table class="table">
+                        <thead class="thead-inverse">
+                            <tr>
+                                <th>Patient</th>
+                                <th>Service</th>
+                                <th>Service Date</th>
+                                <th>Clinic</th>
+                                <th>Doctor</th> 
+                            </tr>
+                        </thead>
+                        <tbody th:each="claim, stats: ${history.getHistoryClaims()}">   
+                            <tr>    
+                            <tr>
+                                <td style="color:goldenrod" 
+                                    th:text="${claim.getNames()}"> 
+                                </td> 
+                                <td style="color:lawngreen" th:text="${claim.Service}"></td> 
+                                <td style="color:aqua" th:text="${claim.DateService}"></td>
+                                <td th:text="${claim.Clinic}"></td>
+                                <td th:text="${claim.Physician}"></td> 
+                            </tr>  
+                            <tr>
+                                <td style="color:gold" th:text="${claim.getIdStatusFields}"></td> 
+                                <!--td th:text="${claim.ClaimType}"></td--> 
+                                <td th:switch="${claim.ClaimType}">
+                                    <div th:case="m">
+                                        Medical
+                                    </div>
+                                    <div th:case="d">
+                                        Dental
+                                    </div>
+                                    <div th:case="v">
+                                        Vision
+                                    </div>
+                                    <div th:case="x">
+                                        Drug
+                                    </div>
+                                </td> 
+                                <td style="color: aqua;" th:text="${claim.PlanId}"></td>
+                            </tr> 
+                           
+                                <tr>
+                                    <td>Procedure:</td>
+                                    <td th:text="${claim.Procedure1}"></td> 
+                                    <td>Diagnosis:</td>
+                                    <td th:text="${claim.Diagnosis1}"></td>
+                                    <td>Total Charge:</td>
+                                    <td style="color:lawngreen" th:text="${claim.TotalCharge}"></td> 
+                                </tr>  
+                                <tr>
+                                    <td>Description:</td>
+                                    <td th:text="${claim.ClaimDescription}"></td> 
+                                    <td>Covered:</td>
+                                    <td style="color:lawngreen" th:text="${claim.CoveredAmount}"></td> 
+                                    <td>Balance:</td>
+                                    <td style="color: lawngreen" th:text="${claim.BalanceOwed}"></td> 
+                                   
+                                </tr>
+                                <tr th:if="${claim.isMedicalClaim}"> 
+                                        <td>Confined:</td>
+                                        <td th:text="${claim.DateConfine}"></td> 
+                                        <td>Released:</td>
+                                        <td th:text="${claim.DateRelease}"></td>
+                                </tr> 
+                                <tr th:if="${claim.isDentalClaim}">
+                                    <td>Tooth Number:</td>
+                                    <td th:text="${claim.ToothNumber}"></td>  
+                                </tr>   
+                                <tr th:if="${claim.isVisionClaim}">
+                                    <td>Vision Materials:</td>
+                                    <td th:text="${claim.Eyeware}"></td>  
+                                </tr>  
+                                <tr th:if="${claim.isDrugClaim}">
+                                    <td>Drug Name:</td>
+                                    <td th:text="${claim.DrugName}"></td>  
+                                </tr>  
+
+                                <tr th:if="${claim.ClaimStatus.trim()=='Adjusted'}">
+                                    <td>Claim Adjusted by:</td>
+                                    <td style="color:gold" th:text="${claim.AdjustingClaimId}"></td> 
+                                    <td>Adjustment Date:</td>
+                                    <td style="color:gold" th:text="${claim.AdjustedDate}"></td>
+                                </tr> 
+                                <tr th:if="${claim.ClaimStatus.trim()=='Adjustment'}">
+                                    <td>Adjustment for:</td>
+                                    <td style="color: yellow;" th:text="${claim.AdjustedClaimId}"></td> 
+                                </tr> 
+
+                                <tr th:if="${claim.ClaimStatus.trim()=='Paid'}"> 
+                                     <td>Payment Amount:</td>
+                                     <td th:text="${claim.PaymentAmount}"></td>
+                                     <td>Payment Date:</td>
+                                     <td th:text="${claim.PaymentDate}"></td>
+                                </tr>  
+                                <!-- todo see existing htm code for hist and
+                                     add script to pop hidden field claim number -->
+                                <tr> 
+                                   
+                                <td th:if="${claim.ClaimStatus.trim()!='Adjusted' 
+                                               && 
+                                               claim.ClaimStatus.trim()!='Paid'}">
+                                       <button  
+                                            class="btn btn-primary" 
+                                            id="adjust"  
+                                            th:value="'Adjust' + ${claim.ClaimIdNumber}">  
+                                            Adjust Claim
+                                        </button>
+                                </td>  
+                                <td th:if="${claim.ClaimStatus.trim()!='Adjusted'
+                                               && 
+                                               claim.ClaimStatus.trim()!='Paid'
+                                              }">
+                                        <button  
+                                            class="btn btn-primary"
+                                            id="pay"  
+                                            th:value="'Pay' + ${claim.ClaimIdNumber}">
+                                            Pay Claim
+                                        </button>
+                                </td> 
+                                <td>
+                                    <a th:href="@{/menu}"  class="btn btn-primary st1 b1"> Menu </a>
+                                </td>
+                                <td>
+                                    <a th:href="@{/claim}"  class="btn btn-primary st1 b1"> New </a>
+                                </td> 
+                                </tr>
+                               
+                        </tbody>
+                        </table>
+
+           </div>
+
+                   
+            <div style="color:lawngreen" class="row" form-control>
+                <span style='color:lawngreen'>
+
+                    <!-- session bean message will override default if set. -->
+                    <div th:unless="${@sessionBean.GetMessage().equals('')}">
+                           <text  th:text="${@sessionBean.GetMessage()}"/>
+                    </div>
+                    <div th:if="${@sessionBean.GetMessage().equals('')}">
+                            <text>Claim history display.</text>
+                    </div>
+                </span>
+            </div>  
+    
+            <br> 
+                
+    </div>
+
+
+    
+     <!-- detect which button was used...  -->
+     <input style="visibility:hidden" 
+     id="buttonAction"
+     type="text"
+     th:field="*{buttonAction}" />
+
+
+     <!-- submit javascript put adjusted claim id here  -->
+     <input style="visibility:hidden" 
+     id="adjustedClaimId"
+     type="text"
+     th:field="*{adjustedClaimId}" /> 
+     
+
+     <!-- submit javascript put pay claim id here  -->
+     <input style="visibility:hidden" 
+     id="payClaimId"
+     type="text"
+     th:field="*{payClaimId}" />
+
+     
+     <!-- submit javascript put payment amount  here  -->
+     <input style="visibility:hidden" 
+     id="paymentAmount"
+     type="text"
+     th:field="*{paymentAmount}" />
+
+
+
+</form>
+
+    </body>
+    </html>
+    
+    

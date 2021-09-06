@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+ <html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>E10 error information</title>
+</head>
+<body style="background-color:black;">
+
+    <div style="margin-top: 100px; margin-left: 100px;">
+
+    <h1 style="color:white;font-family:Arial">E10 Insurance Application</h1>
+    <h2 style="color:goldenrod;font-family:Arial">An error has occurred</h2>
+    <p style="color: white;font-family:Arial">We are sorry for the unexpected error occurance. Please contact administerator for assistence. 
+        <br>Thank you.
+    </p>
+    <p> the specifics of this error are as follows </p>
+    <p> summary: </p>
+    <p> <th:text="${message}"></th:text></p>
+    <p> details: </p>
+    <p> <th:text="${detailMessage}"></th:text></p>
+
+</div>
+</body>
+</body>
+</html>

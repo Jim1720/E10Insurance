@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<div th:fragment="menu"> 
+
+
+<div class="container"> 
+ 
+    <div class="row">   
+         <img class='mainPic' src='/images/lake.jpg'>  
+   </div>
+   <br>
+
+<div class="row" style= "margin-left: '140px'">  
+  
+   
+    <div class='col-md-1'></div>
+    <div class='col-md-2'> 
+
+            <a type='button' class='st1 b1  btn btn-primary' th:href="@{/update}">
+                            Update Info
+            </a> 
+    </div> 
+
+    
+    <div class='col-md-2'> 
+
+        <a type='button' class='st1 b1 btn btn-primary' th:href="@{/claim}">
+                        File Claim
+        </a> 
+    </div> 
+
+    <div class='col-md-2'> 
+
+        <a type='button' class='st1 b1 btn btn-primary' th:href="@{/history}">
+                        Show History
+        </a> 
+    </div> 
+
+    
+
+    <div class='col-md-2'> 
+
+        <a type='button' class='st1 b1 btn btn-primary' th:href="@{/plan}">
+                        Change Plan
+        </a> 
+    </div> 
+
+    <div class='col-md-2'> 
+
+        <a type='button' class='st1 b1 btn btn-primary' th:href="@{/signout}">
+                        Signout Customer
+        </a> 
+    </div> 
+
+</div>
+
+<br>
+<div class="row" style="margin-left: '140px'">
+             <div class='col-md-1'></div>
+             <div class='col-md-8 offset-md-2' style="color:burlywood; font-size:large;"> 
+
+                    <!-- session bean message will override default if set. -->
+                    <div th:unless="${@sessionBean.GetMessage().equals('')}">
+                        <text th:text="${@sessionBean.GetMessage()}"></text>
+                    </div>
+                    <div th:if="${@sessionBean.GetMessage().equals('')}">
+                            <text></text>
+                    </div>
+                    
+             </div>
+</div>
+
+</div>
+
+</div>

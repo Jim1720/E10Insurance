@@ -1,0 +1,75 @@
+ <!DOCTYPE html>
+ <html xmlns:th="http://www.thymeleaf.org">
+  
+   
+ <body>
+      
+  <div th:fragment="fullmenu"> 
+
+<style> 
+    h4 { color: dodgerblue;}
+    p { color:  white; }  
+</style>
+ 
+  <div class="container">   
+  
+            <h4><b>Register</b></h4>
+            <p>New Customers must first register 
+            to use this site. You will have to key a customer id and a password. Please make a 
+            note of them.
+            <br> You then must select a plan before you can enter claims. This will
+            allow a portion of the service cost to be covered for the new claims.
+            <br><br>
+            <a type="button" class="btn btn-primary"  th:href="@{/register}"> Register </a>  
+            <br /><br />
+
+            <h4><b>Sign-In</b></h4>
+            <p>
+                Existing Customers must sign in 
+                to use this site. You only have to register once.
+                Once signed in you can submit claims; review claim history; pay
+                and adjust medical, dental, vision and drug claims.
+              <br><br>
+            <a type ="button" class="btn btn-primary" th:href="@{/signin}"> Sign in </a>
+                  
+            <br /> <br />
+
+            <h4><b>Update</b></h4>
+            <p>
+                Existing Customers may update their information. 
+              <br /> <br />
+
+            <h4><b>Claim</b></h4>
+            <p> 
+                You can enter new claims. Use numerics for diagnosis and procedures.
+                Four claim types are allowed: Medical, Dental, Vision and Drug.
+                <br>
+                Claims can later be adjusted from the claim history screen.
+              <br /> <br />
+
+            <h4><b>History</b></h4>
+            <p> 
+                Claim History screen allows review adjustment and payment of claims. 
+            <br /> <br />
+
+
+            <h4><b>Style</b></h4>
+            <p>
+                The Style link changes screen styles.<br />
+                Click to add a picture, outline or solid background for a specific screen.
+                When solid or outline is used, click the color link to change colros for that screen.
+                All styles can be reset by using -> info -> reset style button. 
+            <br /> <br />
+
+            <h4><b>Administrator</b></h4>
+            <p>
+                 The administrator can reset customer passwords, change the customer identification
+                 and list all customers in the database.
+            <br /> <br />
+
+            
+    
+      </div>
+      </div>
+
+      </body>

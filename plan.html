@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+ 
+<!--
+
+https://frontbackend.com/thymeleaf/working-with-forms-in-thymeleaf
+
+https://springhow.com/thymeleaf-form-handling/
+
+-->
+
+<div th:fragment="plan">  
+
+<form method="post" th:object="${planSelect}"  th:action="@{/plan}"> 
+
+<div  class="container"> 
+
+    <h2 class='starttitle'>Plan Selection</h2> <br/>
+
+    <div class="row"><br></div>
+
+    <div class="row justify-content-md-center">
+        <label style="color:dodgerblue;font-size:larger;">Click on a button to select plan:</label>
+    </div>
+
+    <div class="row"><br></div>
+
+    <!-- list plans here -->
+    
+    <div class="row">
+    <div class='col-md-3'></div>
+    <div class="col-md-8">    
+
+        <table class="table">
+            
+            <tbody>
+
+            <tr th:each="plan: ${planSelect.getPlans()}">
+                
+                
+                    <td><button class="st1 btn btn-primary"
+                            style="font-size:larger;"
+                            id="plan" 
+                            th:value="${plan.PlanName}"
+                            th:text="${plan.PlanName}">
+                    </button></td>    
+
+                    <td><text style="margin-left:30px; color:white;font-size:larger;" 
+                            th:text="${plan.PlanLiteral}">
+                    </text></td> 
+            </tr>  
+
+        </tbody>
+    
+         </table> 
+         </div>
+    </div> 
+  
+    <div class="row"><br></div> 
+         
+    <div class="row">   
+
+            <div class='col-md-3'></div>
+  
+            <div class='col-md-2'>  
+                     
+                <a th:href="@{/menu}"  class="btn btn-primary st1 b1"> Cancel</a>  
+            
+            </div> 
+    </div>  
+  
+    <div class="row"><br></div> 
+               
+    <div class="row">    
+        
+            <div class='col-md-3'></div>
+
+            <div class='col-md-6 message'
+                 style="color:burlywood;font-family:arial;font-size:large;">  
+  
+                <!-- session bean message will override default if set. -->
+                <div th:unless="${@sessionBean.GetMessage().equals('')}">
+                     <text th:text="${@sessionBean.GetMessage()}"/>
+                 </div>
+                 <div th:if="${@sessionBean.GetMessage().equals('')}">
+                     <text>Make your plan selection.</text>
+                 </div>
+                    
+            </div>
+  
+    </div>
+     
+ 
+
+</div>
+
+       <!-- hidden field -->
+
+       <!-- claim type gets stored here by java script  -->
+       <input style="visibility:hidden" 
+       id="selectedPlan"
+       type="text"
+       th:field="*{selectedPlan}" />
+
+
+</form>
+</html>
