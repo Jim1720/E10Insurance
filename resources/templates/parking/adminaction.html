@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+ <html xmlns:th="http://www.thymeleaf.org"> 
+
+<div th:fragment="adminaction"> 
+
+    
+<div class="container" id="actionscreen">
+
+<form method = "post" th:object="${adminaction}" th:action="@{/adminaction}"> 
+ 
+    <div class="row"><br></div>
+    <div class="row"><br></div>
+
+    <div class="row">
+
+            <div class='col-md-3'></div> 
+            <div class='col-md-5'> 
+
+                    <h3 style="color: goldenrod">Administrator Actions</h3>  
+            </div> 
+    </div> 
+
+   
+   <div class="row"><br></div>
+
+
+    <div class="row"> 
+    
+            <div class='col-md-3'></div> 
+            <div class='col-md-3'> 
+    
+                    <label for='admId' class="st1 control-label">Current Customer:</label> <br>
+                    <input type='text' class="st1 form-control" th:field="*{CurrentCustomer}"><br><br>
+     
+            </div>
+    </div>   
+
+    <div class="row"> 
+  
+        <div class='col-md-3'></div>
+
+        <div class='col-md-3'>  
+     
+
+                <label for='newPassword' class="st1 control-label">New Password:</label> <br>
+                <input type='password' class="st1 form-control" th:field="*{NewPassword}"><br><br>
+
+                <label for="newCustId" class="st1 control-label">New Customer Id:</label> <br>
+                <input type='text' class="st1 form-control" th:field="*{NewCustomer}"><br>
+
+        </div>
+        <div class='col-md-3'>       
+  
+            <label for='newPassword2' class="st1 control-label">Confirm Password:</label> <br>
+            <input type='password' class="st1 form-control" th:field="*{NewConfirmPassword}"><br><br>
+
+            <label for="newCustId2" class="st1 control-label">Confirm New Customer Id:</label> <br>
+            <input type='text' class="st1 form-control" th:field="*{NewConfirmCustomer}"><br>
+
+        </div>
+     </div>
+
+ 
+
+<div class="row"><br></div>
+ 
+<div class="row">   
+    <div class='col-md-3'></div> 
+    <div class='col-md-2'>  
+            <button type="submit" id="action" value="resetpassword" class="st1 b1 btn btn-primary st1">Reset Password</button>  
+    </div>   
+    <div class='col-md-2'>  
+            <button type="submit" id="action" value="resetcustomer" class="st1 b1 btn btn-primary st1">Reset Customer</button>  
+    </div>  
+    <div class='col-md-2'>  
+            <button type="submit" id="action" value="customerlist" class="st1 b1 btn btn-primary st1">List Customers</button>  
+    </div>  
+</div>
+
+<br>
+   <div class="row"> 
+  
+        <div class='col-md-3'></div>
+       
+        <div class='col-md-8 message'
+             style="color:burlywood;font-family:arial;font-size:large;">  
+
+            <!-- session bean message will override default if set. -->
+            <div th:unless="${@sessionBean.GetMessage().equals('')}">
+                 <text th:text="${@sessionBean.GetMessage()}"/>
+             </div>
+             <div th:if="${@sessionBean.GetMessage().equals('')}">
+                 <text>Enter Administrator Id and Password to sign in.</text>
+             </div>
+                
+        </div>
+
+    </div>
+
+
+     <input style="visibility:hidden" 
+     id="buttonAction"
+     type="text"
+     th:field="*{buttonAction}" />
+ 
+</form> 
+</div>

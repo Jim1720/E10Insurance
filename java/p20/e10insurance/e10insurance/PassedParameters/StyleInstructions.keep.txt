@@ -1,0 +1,102 @@
+package p20.e10insurance.e10insurance.PassedParameters;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class StyleInstructions {
+
+    private String style;
+    private String color;
+    private String screenName; 
+    private String displayClass;
+    private String displayClassInternal;
+
+    // internal values used to accomodate and better display
+    // labels and headers;
+    // setColor will call helpers to determine these values automatically.
+    private String labelColor;
+    private String headerColor;
+
+      
+    // css class values to change div characteristics to show
+    // picture, outline or solid colors.
+    private  final String SHOW_PICTURE_CLASS = "bg-image";
+    private  final String SHOW_OUTLINE_CLASS = "bg-outline";
+    private  final String SHOW_SOLID_CLASS   = "bg-solid";
+    private  final String DEFAULT = "";
+
+    StyleInstructions()
+    {
+        labelColor = "white";
+        headerColor = "white";
+    }
+
+    private void setLabelColor(String color)
+    {
+        this.labelColor = color;
+    }
+    
+    public void setDisplayClass(String displayClassType)
+    {
+        displayClassInternal = displayClassType;
+        switch(displayClassType) // 'outline','solid','picture' or 'none'.
+        {
+            case "solid"   : displayClass = SHOW_SOLID_CLASS; break;
+            case "outline" : displayClass = SHOW_OUTLINE_CLASS; break;
+            case "picture" : displayClass = SHOW_PICTURE_CLASS; break;
+            default: displayClass = DEFAULT;
+        }
+    }
+
+    public String getDisplayClass()
+    {
+        return displayClass; // css class
+    }
+
+
+    public void setColor(String color)
+    {
+        this.color = color;
+
+        var labelColor = DetermineLabelColor(color, displayClassInternal);
+        this.setLabelColor(labelColor);
+        this.headerColor = DetermineHeaderColor(color, displayClassInternal);
+
+    }
+
+    public String getColor()
+    {
+        return color;
+    }
+
+    private String DetermineHeaderColor(String color, String displayClass)
+    {
+        return "white";
+    }
+
+    private String DetermineLabelColor(String color, String displayClass)
+    {
+        return "white";
+    }
+
+    public void setStyle(String style)
+    {
+        this.style = style;
+    }
+
+    public String getStyle()
+    {
+       return style;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+    
+}

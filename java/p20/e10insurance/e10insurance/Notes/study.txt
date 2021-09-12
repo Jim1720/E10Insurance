@@ -1,0 +1,20 @@
+
+ stay on 10 for a while
+
+
+ study django first few chaps
+ study pli and query how oracle diff from sql server any other features
+ keep tabs on wwdc for swiftUI changes.
+ review ios concepts like core data
+ study briefly react native
+
+ review C# ? 
+ java topics ??
+ install preview if not interfer with prod.
+ look up github note and check performance of p20 existing projects
+ review java to azure 
+ briefly look at aws
+
+ S10 write a SwiftUI S10Insurance app with empty local db! or connect to A45 ?? huh what!
+ T10 write an anderoid app to T10Insurance (A is taken). just idea.
+

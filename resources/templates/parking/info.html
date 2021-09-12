@@ -1,0 +1,84 @@
+  
+ <!DOCTYPE html>
+ <html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="info"> 
+ 
+    <style>
+
+        p { color: burlywood }
+        li { color: white }
+    
+    </style>
+    <div class='container'>  
+        <br><br>
+      
+        <div class="row">
+      
+                <h3 style="color:burlywood"> Information </h3> 
+      
+        </div> <br>
+       
+        <div class="row"> 
+      
+            <p class='para'> Use this app to register as a customer then enter and adjust claims.</p> 
+      
+            <ul>
+              <li> register - Enter customer info : you will be prompted to select a customer
+                   identification number and password. A promotion code will be provided to
+                   allow registeration. 
+              </li>
+              <li> update - Revise customer information. </li>
+              
+              <li> claim - Enter and submit a claim. You must select a claim type: medical, dental etc. </li>
+           
+           
+           <li> history - Review claim history. An option is provided to adjust a claim with a new one,
+                or pay an existing claim. </li>
+            </ul>
+      
+      </div>
+            
+        <div class='row'> 
+      
+            <p class='para'> Customization of this display.</p>  
+        </div>
+      
+        <div class='row'>
+      
+            <ul>
+              
+              <li> Clicking on style will change update and claim screen styles. <br>
+                   Available Styles: picture backgorund, solid or outline backgrounds with color link to
+                   change colors.
+              </li>
+              </ul>
+            </div>
+         
+          <div class='row'>
+              
+            <p class='para'> An administration function is available for authorized individuals. </p>
+          </div>
+      
+          
+          <div class='row'>
+               <ul> 
+                  <li> 
+                      Actions include: Password Reset, Customer Id Reset and Customer List functions are available.
+                  </li>
+                
+                  </ul>
+            </div>
+        
+          </div>
+      
+          <br>
+          <br>
+        
+              
+
+         <a th:href="@{/start}"  style="margin-left: 390px;"  class="btn btn-primary st1 b1"> Return</a> 
+
+ </div>
+
+</div>

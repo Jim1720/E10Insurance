@@ -1,0 +1,125 @@
+
+
+ 5.12 - drop downs - remove pb34 then research reg, update.
+ 5.12 - added pass,config recall to reg screen : last keyed
+ 5.12 - added id=Styler to container so that claimpagejs can look for id=Styler.
+ 5.12 - claimpage.js - added id=Stylerlookup to activate color features.
+ 5.12 - fullmenu - add verbiage including color style notes.
+
+ 5.12 - StyleReset - Settings screen, StyleController, will be used to clear then
+        style list for all screens, and to a non-screen redirect to appriporiate 
+        controller.  atypical since links do not go to controllers as we found out
+        in the admin codings but this case the redirect will send to a real screen.
+
+ 5.12   Center Picture
+        screens: update, claim
+        action: added a div above style to center the style; so div order is 
+        container, center styles, style, form on the update and claim screens.
+        style elements when used
+        changed name to id and code in claimpage.js to look for the id.
+        used th:addclass coding to put extra 'centerstyle' class in the html.
+
+
+ 5.12   password edit = e20 add code to check for customer existence
+        added editflag and message similar to reset customer pojo.
+        tune response check code to look for flag and mesage in the client.
+        
+        ** added constructor to resetPassword and resetCustomer to 
+        ** include flag, message on return entity to caller.
+
+ 5.12   token - design requirment
+        read up on redis spring boot and 
+        jwt spring boot an plan coding changes
+        for all post, puts. 
+        again, you will need 2 customer reads: register-read, and customer-existience-read    
+        as the register-read passes back a jwt token.
+
+5.12    concerned about chnges to CDNs. can we use them in production?
+
+5.12   adjust offset colors  
+
+5.12    any other issues listed in history?
+
+ ====
+
+5.13 reinstall on win10.
+5.13 combo box size fixed using simple  <select style="height: 42px;"  
+     that simple !!
+5.13 password reset works.
+5.13 customer reset fails - NewCustomer is null.
+
+5.15 adm actions working
+
+5.17 added jwt to pom.
+
+       	<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency>
+ 5.17 - 
+       a. signin - gets token and stores in session bean
+       b. reg    - gets token and stores in session bean
+       * java lompnbec * set,get fyi ** 
+
+ 5.18 - a. changed admin signin to go to e20 for env.admin id and env.password
+        b. e20 - added token logic without expiration only check secret to validate request at this point.
+        c. may add cust id to the token to seem more authentic !
+        d. add expiration time to the token.
+        e. storage note: reddis is used to hold server storage with jedis, lettuce etc.
+           will attempt to use a bean with scope of singleton
+           that should last the application context lifecycle
+           to hold the expiring records for jwt verifications.
+           'baeldung' bean life cycles.
+ 
+  5.18 environment variable change:
+       a. admin id and password now read by e20 environment
+       b. e20 environment has a 'secret' variable for the json web token.
+
+  5.18 fit finish : claim screen; line up confine/rel cf a40 that's lined up.
+
+  5.18 claim - moved form to match a40; no change
+  5.18 claim - added div after the id='am' wow. this is it! all lined up.
+
+  5.21 colors - added message color variables 
+  5.21 styles - need to make screen consistent sizes
+  5.21 token  - working on token logic getting expired error.
+  5.21 logging e20 added logging to start and token validation 
+  5.21 env vars - had to pass from controller bean would not accept them directly.
+  
+  5.22 timeout - made this a parm to controllers to pass to create token
+  5.22 update controller - fixed wrong coding here; should read token from header NOT passed data!
+  5.22 verified the token logic basically worked but env timeout broke it temporarily
+  5.22 passed admind and custid to 'someid' in the token routine.
+
+  5.27 - adm - fixed http entities to send dummy string and return string 
+  5.27 - customer list is now working
+  5.27 - styles / margin-left : claimpage.js : supplied margin-left's to keep screens centered when           
+         using colors. adding widths to bg- classes to not squeeze form in these cases.
+         moved msg to right of buttons ; have controller 1 set message to reduce
+         message coding commented out; do same for claim screen.
+         
+  5.28   PASSED - admin action  pw reset cust reset - with tokens test.
+  5.28   FIXED - was putting NULL into the customer object on 1st update - removed that stmt.
+  5.28   FIXED - internal plan field not updated when plan changes - was updating parm not cust obj.
+                 wrong coding 'autowire'  planparm custobj.!
+  5.28   TESTED - token time out and bypass ok.
+  5.28   FIXED - update edit maligns date upon edit;  
+  5.28   FIXED - bad date format ; was putting bean in the screen attribute when update edit!
+  5.28   UPDATE - removed lower level try and controller catches error but
+                  wrong error message shows up 'bad req'.
+  5.28   update - date vanishes when edit happens - replace date with entered value please.
+
+  5.28   update catcher = code plan=null and try update : top try catch should work with message....
+  5.28   put update changes to claim screen for sizing...
+  5.28   solid transition of 2s working just fine.
+  
+  5.28  fixed percent logic to trim/match; added update to field totalcharge on claim.
+
+  6.5 - added . space to name1 edit criteria
+  
+  
+
+
+
+

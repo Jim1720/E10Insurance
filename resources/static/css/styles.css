@@ -1,0 +1,146 @@
+
+   body { background-color: black; color: white;  } 
+   
+/* only for alignment */
+
+.bg-style {
+  
+   margin-left: var(--margin-left);  
+   padding: 40px;
+}
+	  
+.bg-image { margin-left: var(--margin-left);  
+   padding: 40px;
+   background-image : url('../../images/road.jpg');  background-size: 100% 100% }
+
+/* these two classes use css variable */
+
+.bg-outline { width: 1150px; margin-left: var(--margin-left); border-style: solid; border-width: 1px; 
+   border-color: var(--user-color);
+   padding: 10px 40px 10px 40px  }
+
+.bg-solid { width: 1150px; margin-left: var(--margin-left); background-color : var(--user-color);
+           padding: 10px 40px 10px 40px  }
+            
+ 
+ /* space update bottom buttons */          
+.a11 { margin-left: 35px; }
+
+/* use above the style to center picture and style elements on screen */
+
+/* reg update screns */
+
+.centerstyles {margin-left: 250px; margin-right: 250px;}
+
+/* claim screen */
+.centerclaimstyles {margin-left:  20px; margin-right:  20px;} 
+ 
+
+   :root {
+
+      --user-color: goldenrod; 
+      --label-color: dodgerblue;
+      --h-color: goldenrod;
+      --margin-left: 10px;
+      --bb-color: white;
+   }
+
+   .blue { color: var(--adj-color); }
+
+   .white { color: white; }
+
+   .menutitle { color: goldenrod; }  
+
+   .mainPic { display: block;
+              margin-left: auto;
+              margin-right: auto;
+              width: 82%;
+              height: 520px
+            }
+ 
+    .starttitle { color: burlywood;
+                  font-size: 14;
+                  font-family:Arial; 
+                  text-align: center;
+    }
+
+    
+    .starttitle1 { color:rgb(0, 195, 255);
+      font-size: 14;
+      font-family:Arial; 
+      text-align: center;
+}
+
+    .menutitle { color: white;
+                 font-size: 14;
+                 font-family: Arial;
+                 text-align: left;
+              }
+
+   /* st1   signin screen text css */
+
+   .st1 { font-family: Arial;
+          font-size: larger }
+ 
+   /* message colors on color screens */
+   .msgcolor {color: var(--message-color)}
+    
+   /* b1 hover class for buttons goldenrod */
+
+   /* TODO: change hover to btn-outline-warning */
+   
+   .b1:hover { color: goldenrod; background-color: black }
+   .b1 { color: white; margin: 2px;
+         font-size:  larger;  }
+         
+   .hb1 { color: aquamarine;  background-color: black; margin: 2px;
+      font-size:  larger;  }
+
+   .b2 { color: dodgerblue;  background-color: black; margin: 2px;
+            font-size:  larger;  }
+
+   .navMsg { color: goldenrod; font-family: Arial; font-size: x-large }
+
+/* display link tag list items inline */
+
+li  { display: inline; }
+
+/* menu button is a button not link */ 
+.b3-brand { color: lightskyblue; background-color:   black;  font-size: x-large;}
+
+.control-label  {  font-size: mediume;  color: dodgerblue; }
+
+/* use on update, claim screens with Style Feature*/ 
+.control-label2 {  font-size: mediume; color: var(--label-color) }
+
+/* on upate screen change button labels on solid colors*/
+.b11 {
+     color: var(--label-color); 
+     border-radius: 2px;
+     border-width: 2px;
+     border-color: --var(--bb-color);
+     padding: 2px 5px 2px 5px;} /* top, right etc. */
+
+.msg1 { color: var(--message-color); }
+
+/* t1 for text in start page left right spacing */
+
+.t1 { margin-top: 10px; margin-left: 4px; margin-right: 4px; font-family: Arial; font-size:large;} 
+ 
+.t1left { margin-top: 10px; margin-left: 210px; margin-right: 4px; font-family: Arial; font-size:large;}
+
+
+:root { 
+    
+   --adj-color: black;
+   --label-color: dodgerblue;
+}
+
+/* links */
+.black-bar { background-color: black; font-style:arial; font-size:larger; } 
+
+/* bottom links on splash */
+
+a { color:white; font-family: Arial; font-size:medium;}
+
+.borders1 {  border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: lightgray; }

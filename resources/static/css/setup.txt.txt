@@ -1,0 +1,15 @@
+
+
+A. Bootstrap / local setup
+
+
+ add bootstrap.min to static/css
+
+ add thymleaf style link to the css in the template.
+
+ <link th:href = "@{/css/bootstrap.min.css}" rel="stylesheet">
+
+ also put bootstrap.min.css.map in the css dir / no link required.
+
+ note: requires thyme link html header in the template.
+ 

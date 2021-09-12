@@ -1,0 +1,46 @@
+
+ <!DOCTYPE html>
+ <html xmlns:th="http://www.thymeleaf.org">
+
+ 
+<div th:fragment="unauth"> 
+ 
+ <div style="margin-top: 250px; margin-left: 550px;  margin-right: 100px;"> 
+
+ <h2 style='color:goldenrod'> Unauthorized Action Attempted </h2>
+
+
+ <br>
+
+ <p style="color:white">
+ 
+  <p style="color:white">You are not signed in and not allowed to use this screen.
+ </p><p>
+  You can return to start or signin by using one of the selections below.</p>
+
+  
+
+<div class="row" style= "margin-left: '140px'; margin-top: 100px; ">  
+
+    <div class='col-md-2'> 
+
+        <a type='button' class='st1 b1 btn btn-primary' th:href="@{/signin}">
+                        Sign In 
+        </a> 
+    </div> 
+
+    <div class='col-md-2'> 
+
+        <a type='button' class='st1 b1 btn btn-primary' th:href="@{/start}">
+                        Return to start
+        </a> 
+    </div> 
+
+</div>
+ 
+
+ </div>
+
+ </div>
+
+ </html>

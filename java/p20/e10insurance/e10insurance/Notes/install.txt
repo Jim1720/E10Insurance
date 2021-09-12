@@ -1,0 +1,38 @@
+install starters: 
+
+   1. spring-web
+   2. thymeleaf
+   3. spring actuator
+      dev tools hot reload
+   4. never close workspace in vs
+   5. coppy non-generated java files
+   6. copy resources, templates
+   7. application properties: server.port = 3100 
+   8. run following script to set 5 environment variables for E10insurnance:
+   9. setupenvtest.bat may have to restart session for effect. 
+  10. add the following to the pom file:
+
+  	<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency> 
+
+      <configuration>
+					<archiver>
+						<mainClass>
+							p20.e10insurance.e10insurance.E10insuranceApplication
+						</mainClass>
+					</archiver>
+				</configuration>
+
+
+   Installation Instructions
+   1. Prerequesites: spring boot tools, spring initializer, spring 
+   2. control shift p initializer select maven project
+   3. take defaults
+   4. use p20.e10insurance
+   5. then e10insurance
+   6. save to new dir NE10Insurance in aproject
+   7. under main copy and replace java, resources directory
+   8. use triangle under dashboard to build and run project
