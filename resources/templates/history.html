@@ -2,210 +2,464 @@
  <!DOCTYPE html>
  <html xmlns:th="http://www.thymeleaf.org">
 
-<div th:fragment="history"> 
+ <style>
 
-
-    <!-- research server side events for the buttons : pay and adjust. -->
-
-
-<form method="post" th:object="${history}"  th:action="@{/history}"> 
-
-<div class="container" id="onHistory"> 
-
-    <br> 
-    
-    <h2 class='starttitle'>Claim History Screen</h2>  
-    
-           <a th:href="@{/menu}"  style='margin-left: 30px' class="btn btn-primary st1 b1"> Menu </a>   
-           
-           <a th:href="@{/claim}"  style='margin-left: 30px' class="btn btn-primary st1 b1"> New </a>  
-
-           <div class="row" style="margin-top:20px" id="onHistory">
-                 
-                <table class="table">
-                        <thead class="thead-inverse">
-                            <tr>
-                                <th>Patient</th>
-                                <th>Service</th>
-                                <th>Service Date</th>
-                                <th>Clinic</th>
-                                <th>Doctor</th> 
-                            </tr>
-                        </thead>
-                        <tbody th:each="claim, stats: ${history.getHistoryClaims()}">   
-                            <tr>    
-                            <tr>
-                                <td style="color:goldenrod" 
-                                    th:text="${claim.getNames()}"> 
-                                </td> 
-                                <td style="color:lawngreen" th:text="${claim.Service}"></td> 
-                                <td style="color:aqua" th:text="${claim.DateService}"></td>
-                                <td th:text="${claim.Clinic}"></td>
-                                <td th:text="${claim.Physician}"></td> 
-                            </tr>  
-                            <tr>
-                                <td style="color:gold" th:text="${claim.getIdStatusFields}"></td> 
-                                <!--td th:text="${claim.ClaimType}"></td--> 
-                                <td th:switch="${claim.ClaimType}">
-                                    <div th:case="m">
-                                        Medical
-                                    </div>
-                                    <div th:case="d">
-                                        Dental
-                                    </div>
-                                    <div th:case="v">
-                                        Vision
-                                    </div>
-                                    <div th:case="x">
-                                        Drug
-                                    </div>
-                                </td> 
-                                <td style="color: aqua;" th:text="${claim.PlanId}"></td>
-                            </tr> 
-                           
-                                <tr>
-                                    <td>Procedure:</td>
-                                    <td th:text="${claim.Procedure1}"></td> 
-                                    <td>Diagnosis:</td>
-                                    <td th:text="${claim.Diagnosis1}"></td>
-                                    <td>Total Charge:</td>
-                                    <td style="color:lawngreen" th:text="${claim.TotalCharge}"></td> 
-                                </tr>  
-                                <tr>
-                                    <td>Description:</td>
-                                    <td th:text="${claim.ClaimDescription}"></td> 
-                                    <td>Covered:</td>
-                                    <td style="color:lawngreen" th:text="${claim.CoveredAmount}"></td> 
-                                    <td>Balance:</td>
-                                    <td style="color: lawngreen" th:text="${claim.BalanceOwed}"></td> 
-                                   
-                                </tr>
-                                <tr th:if="${claim.isMedicalClaim}"> 
-                                        <td>Confined:</td>
-                                        <td th:text="${claim.DateConfine}"></td> 
-                                        <td>Released:</td>
-                                        <td th:text="${claim.DateRelease}"></td>
-                                </tr> 
-                                <tr th:if="${claim.isDentalClaim}">
-                                    <td>Tooth Number:</td>
-                                    <td th:text="${claim.ToothNumber}"></td>  
-                                </tr>   
-                                <tr th:if="${claim.isVisionClaim}">
-                                    <td>Vision Materials:</td>
-                                    <td th:text="${claim.Eyeware}"></td>  
-                                </tr>  
-                                <tr th:if="${claim.isDrugClaim}">
-                                    <td>Drug Name:</td>
-                                    <td th:text="${claim.DrugName}"></td>  
-                                </tr>  
-
-                                <tr th:if="${claim.ClaimStatus.trim()=='Adjusted'}">
-                                    <td>Claim Adjusted by:</td>
-                                    <td style="color:gold" th:text="${claim.AdjustingClaimId}"></td> 
-                                    <td>Adjustment Date:</td>
-                                    <td style="color:gold" th:text="${claim.AdjustedDate}"></td>
-                                </tr> 
-                                <tr th:if="${claim.ClaimStatus.trim()=='Adjustment'}">
-                                    <td>Adjustment for:</td>
-                                    <td style="color: yellow;" th:text="${claim.AdjustedClaimId}"></td> 
-                                </tr> 
-
-                                <tr th:if="${claim.ClaimStatus.trim()=='Paid'}"> 
-                                     <td>Payment Amount:</td>
-                                     <td th:text="${claim.PaymentAmount}"></td>
-                                     <td>Payment Date:</td>
-                                     <td th:text="${claim.PaymentDate}"></td>
-                                </tr>  
-                                <!-- todo see existing htm code for hist and
-                                     add script to pop hidden field claim number -->
-                                <tr> 
-                                   
-                                <td th:if="${claim.ClaimStatus.trim()!='Adjusted' 
-                                               && 
-                                               claim.ClaimStatus.trim()!='Paid'}">
-                                       <button  
-                                            class="btn btn-primary" 
-                                            id="adjust"  
-                                            th:value="'Adjust' + ${claim.ClaimIdNumber}">  
-                                            Adjust Claim
-                                        </button>
-                                </td>  
-                                <td th:if="${claim.ClaimStatus.trim()!='Adjusted'
-                                               && 
-                                               claim.ClaimStatus.trim()!='Paid'
-                                              }">
-                                        <button  
-                                            class="btn btn-primary"
-                                            id="pay"  
-                                            th:value="'Pay' + ${claim.ClaimIdNumber}">
-                                            Pay Claim
-                                        </button>
-                                </td> 
-                                <td>
-                                    <a th:href="@{/menu}"  class="btn btn-primary st1 b1"> Menu </a>
-                                </td>
-                                <td>
-                                    <a th:href="@{/claim}"  class="btn btn-primary st1 b1"> New </a>
-                                </td> 
-                                </tr>
-                               
-                        </tbody>
-                        </table>
-
-           </div>
-
-                   
-            <div style="color:lawngreen" class="row" form-control>
-                <span style='color:lawngreen'>
-
-                    <!-- session bean message will override default if set. -->
-                    <div th:unless="${@sessionBean.GetMessage().equals('')}">
-                           <text  th:text="${@sessionBean.GetMessage()}"/>
-                    </div>
-                    <div th:if="${@sessionBean.GetMessage().equals('')}">
-                            <text>Claim history display.</text>
-                    </div>
-                </span>
-            </div>  
-    
-            <br> 
-                
-    </div>
-
-
-    
-     <!-- detect which button was used...  -->
-     <input style="visibility:hidden" 
-     id="buttonAction"
-     type="text"
-     th:field="*{buttonAction}" />
-
-
-     <!-- submit javascript put adjusted claim id here  -->
-     <input style="visibility:hidden" 
-     id="adjustedClaimId"
-     type="text"
-     th:field="*{adjustedClaimId}" /> 
+    .a1 { margin-top: 15px; } 
      
+    .p10 { margin-left: 15px; }
 
-     <!-- submit javascript put pay claim id here  -->
-     <input style="visibility:hidden" 
-     id="payClaimId"
-     type="text"
-     th:field="*{payClaimId}" />
+ </style>
 
-     
-     <!-- submit javascript put payment amount  here  -->
-     <input style="visibility:hidden" 
-     id="paymentAmount"
-     type="text"
-     th:field="*{paymentAmount}" />
+<div th:fragment="history">  
+
+<form method="post" th:object="${history}"  th:action="@{/history}">  
+<div class="container" id="onHistory">  
+<br>  
+<h2 class='starttitle'>Claim History Screen</h2>    
+
+<div class="row" style="margin-top:20px" id="onHistory"></div>
+ 
+ 
+<div th:each="claim, stats: ${history.getHistoryClaims()}">  
+    
+<!-- navigation locations -->
+<div id="top" th:if="${stats.first}"></div> 
+<div id="mid" th:if="${stats.count == stats.size/2}"></div>
+<div id="bottom" th:if="${stats.last}"></div> 
+
+<!-- focus location -->
+<div id="focus" th:if="${claim.isFocused().equals('Y')}"
+                th:value="${claim.ClaimIdNumber}"
+                style="color:goldenrod"> </div>  
+
+<!-- activity locations -->
+<div id="act1" th:if="${@historyOperationBean.isActUsed().equals(true) 
+    &&
+    @historyOperationBean.getActionCount() >= 1
+    &&
+    claim.ClaimIdNumber==@historyOperationBean.getActionClaimId(1)}"></div>
+
+
+<div id="act2" th:if="${@historyOperationBean.isActUsed().equals(true)  
+    &&
+    @historyOperationBean.getActionCount() == 2
+    &&
+    claim.ClaimIdNumber==@historyOperationBean.getActionClaimId(2)}"></div> 
+    
+<!-- claim data -->
+<div class="row a1">
+    <div class="col-md-3 white">  Claim Id Number:</div>
+    <div class="col-md-3 white">  Claim Type: </div>
+    <div class="col-md-3 white">  Sequence: </div> 
+</div> 
+
+<div class="row">
+    <div class="col-md-3 burleywood" th:text="${claim.getIdStatusFields}"> </div> 
+    <div class="col-md-3 dodgerblue" th:switch="${claim.ClaimType}">
+        <div th:case="m">
+            Medical
+        </div>
+        <div th:case="d">
+            Dental
+        </div>
+        <div th:case="v">
+            Vision
+        </div>
+        <div th:case="x">
+            Drug
+        </div>
+    </div> 
+    <div class="col-md-3 dodgerblue" th:text="${stats.count} + ' of ' + ${stats.size}"></div> 
+</div>
+
+<div class="row a1">
+    <div class="col-md-3 whte">  Patient:</div>
+    <div class="col-md-3 white">  Service: </div>
+    <div class="col-md-3 white">  Clinic: </div>
+    <div class="col-md-3 white">  Doctor:</div>
+</div> 
+
+<div class="row">
+    <div class="col-md-3 dodgerblue" th:text="${claim.getNames()}"> </div> 
+    <div class="col-md-3 dodgerblue" th:text="${claim.Service}">   </div>
+    <div class="col-md-3 dodgerblue" th:text="${claim.Clinic}">    </div>
+    <div class="col-md-3 dodgerblue" th:text="${claim.Physician}">    </div>
+</div> 
+
+
+<div class="row a1">
+    <div class="col-md-3 white">  Procedure:</div>
+    <div class="col-md-3 white">  Diagnosis: </div>
+    <div class="col-md-3 white">  Total Charge: </div>  
+    <div class="col-md-3 white">  Plan: </div> 
+</div> 
+
+
+<div class="row">
+    <div class="col-md-3 dodgerblue" th:text="${claim.Procedure1}">   </div>
+    <div class="col-md-3 dodgerblue" th:text="${claim.Diagnosis1}">   </div>
+    <div class="col-md-3 dodgerblue" th:text="${claim.TotalCharge}">  </div>  
+    <div class="col-md-3 dodgerblue" th:text="${claim.PlanId}"></div>  
+</div> 
+
+
+<div class="row a1">
+    <div class="col-md-3 white">  Description:</div>
+    <div class="col-md-3 white">  Covered: </div>
+    <div class="col-md-3 white">  Balance Owed: </div> 
+</div>  
+
+<div class="row">
+    <div class="col-md-3 dodgerblue" th:text="${claim.ClaimDescription}"></div>
+    <div class="col-md-3 dodgerblue" th:text="${claim.CoveredAmount}"></div> 
+    <div class="col-md-3 dodgerblue" th:text="${claim.BalanceOwed}"></div> 
+</div> 
+
+<!-- claim type fields: medical, dental, etc. --> 
+
+<div class="row a1"  th:if="${claim.isMedicalClaim}">
+    <div class="col-md-3 white">  Confined:</div>
+    <div class="col-md-3 dodgerblue" th:text="${claim.DateConfine}">  </div>
+    <div class="col-md-3 white">  Released: </div>  
+    <div class="col-md-3 dodgerblue" th:text="${claim.DateRelease}"></div> 
+</div>  
+
+<div class="row a1" th:if="${claim.isDentalClaim}">
+    <div class="col-md-3 white">  Tooth Number:</div>
+    <div class="col-md-3 dodgerblue"  th:text="${claim.ToothNumber}">  </div>
+</div> 
+
+<div class="row a1" th:if="${claim.isVisionClaim}">
+    <div class="col-md-3 white">  Vision Materials:</div>
+    <div class="col-md-3 dodgerblue" th:text="${claim.Eyeware}">  </div>
+</div> 
+
+<div class="row a1" th:if="${claim.isDrugClaim}">
+    <div class="col-md-3 white">  Drug Name:</div>
+    <div class="col-md-3 dodgerblue"th:text="${claim.DrugName}">  </div>
+</div>
+
+<!-- end type fields  -->
+
+<!-- adjusted line --> 
+
+<div class="row a1"  th:if="${claim.ClaimStatus.trim()=='Adjusted'}">
+    <div class="col-md-3 white">  Claim Adjusted by:</div>
+    <div class="col-md-3 dodgerblue" th:text="${claim.AdjustingClaimId}">  </div>
+    <div class="col-md-3 white">  Adjustment Date: </div>  
+    <div class="col-md-3 dodgerblue" th:text="${claim.AdjustedDate}"></div> 
+</div>  
+
+<!-- adjustment line -->
+
+<div class="row a1"  th:if="${claim.ClaimStatus.trim()=='Adjustment'}">
+    <div class="col-md-3 white">  Adjusted Claim:</div>
+    <div class="col-md-3 dodgerblue">  </div>
+    <div class="col-md-3 white">  Adjusted Date: </div>  
+    <div class="col-md-3 dodgerblue"></div> 
+</div>  
+
+
+<!-- claim paid line --> 
+
+<div class="row a1"   th:if="${claim.ClaimStatus.trim()=='Paid'}">
+    <div class="col-md-3 white"> Payment Amount:</div>
+    <div class="col-md-3 dodgerblue" th:text="${claim.PaymentAmount}">  </div>
+    <div class="col-md-3 white">  Payment Date: </div>  
+    <div class="col-md-3 dodgerblue" th:text="${claim.PaymentDate}"></div> 
+</div>
+
+<!-- button row --> 
+
+<div class="row a1">
+     <a th:href="@{/menu}"  class="g5new btn btn-primary-outline st1a"> Menu </a>  
+
+     <!-- stay --> 
+     <!-- value: is read by controller to process -->
+     <button  
+       th:if="${@historyOperationBean.isStayUsed().equals(true)}"  
+       class="g4stay btn btn-primary-outline st1a"  
+       id="StayButton"
+       onclick="toggleStay()"
+       th:value="${@historyOperationBean.isStayOnString()}"
+       th:text="${@historyOperationBean.getStayLiteral()}"> 
+    </button>
+
+     <!-- focus -->
+     <button  
+        th:if="${@historyOperationBean.isFocusUsed().equals(true)}" 
+        class="g4focus btn btn-primary-outline st1a"  
+        id="FocusButton"
+        onclick="toggleFocus()" 
+        th:value="${@historyOperationBean.isFocusOnString()}"
+        th:text="${@historyOperationBean.getFocusLiteral()}">
+    </button> 
+    
+    <a th:href="@{/claim}"  class="g5new btn btn-primary-outline st1a p10"> Claim </a>  
+
+     <!-- adjustment button --> 
+     <!-- values do not show but are used by java script to pass controller actions -->
+     <button  
+        th:if="${claim.ClaimStatus.trim()!='Adjusted' 
+        && 
+        claim.ClaimStatus.trim()!='Paid'}"
+        class="g4adjust btn btn-primary-outline st1a" 
+        id="adjust" 
+        th:value="'Adjust' + ${claim.ClaimIdNumber}">  
+        Adjust  
+    </button>
+
+    <!-- pay button -->
+    <button  
+        th:if="${claim.ClaimStatus.trim()!='Adjusted'
+        && 
+        claim.ClaimStatus.trim()!='Paid'}" 
+        class="g4pay btn btn-primary-outline st1a"
+        id="pay"  
+        th:value="'Pay' + ${claim.ClaimIdNumber}">
+        Pay  
+    </button>
+    <!-- top mid bottom -->
+
+    <a  
+    th:if="${@historyOperationBean.isNavUsed().equals(true)}"  
+    class="g4top btn btn-primary-outline st1a" 
+    href="history#top"
+    id="topButton">  
+    Top
+    </a>
+
+    <a  
+    th:if="${@historyOperationBean.isNavUsed().equals(true)}"  
+    class="g4mid btn btn-primary-outline st1a" 
+    href="history#mid"
+    id="midButton">  
+    Mid
+   </a>
+
+    <a  
+    th:if="${@historyOperationBean.isNavUsed().equals(true)}"  
+    class="g4bot btn btn-primary-outline st1a" 
+    href="history#bottom"
+    id="bottomButton">  
+    Bottom
+    </a>
+
+    <!-- act1 and act2 -->
+
+    <a  href="history#act1"
+    th:if="${@historyOperationBean.isActUsed().equals(true) 
+           &&
+           @historyOperationBean.getActionCount()>0}" 
+    class="g5act1 btn btn-primary-outline st1a" 
+    id="act1Button">
+        <text th:text="${@historyOperationBean.getAction1Literal()}"></text> 
+    </a>  
+
+    <a  href="history#act2"
+    th:if="${@historyOperationBean.isActUsed().equals(true)  
+           &&
+           @historyOperationBean.getActionCount()>1}"   
+    class="g5act2 btn btn-primary-outline st1a" 
+    id="act2Button">  
+        <text th:text="${@historyOperationBean.getAction2Literal()}"></text> 
+    </a>
 
 
 
-</form>
+    <!-- end buttons -->
+</div>
 
-    </body>
-    </html>
+
+<!-- end button row -->
+
+</div> <!-- end claim loop --> 
+
+<br/> 
+
+<div style="color:lawngreen" class="row" form-control>
+    <span style='color:burlywood'>
+
+        <!-- session bean message will override default if set. -->
+        <div th:unless="${@sessionBean.GetMessage().equals('')}">
+               <text  th:text="${@sessionBean.GetMessage()}"/>
+        </div>
+        <div th:if="${@sessionBean.GetMessage().equals('')}">
+                <text>Claim history display.</text>
+        </div>
+    </span>
+</div>  
+
+ 
+
+</div> <!-- end container --> 
+
+<!-- detect which button was used... Pay, Adjust, Stay or Focus... -->
+<input style="visibility:hidden" 
+id="buttonAction"
+type="text"
+th:field="*{buttonAction}" />
+
+
+<!-- submit javascript put adjusted claim id here  -->
+<input style="visibility:hidden" 
+id="adjustedClaimId"
+type="text"
+th:field="*{adjustedClaimId}" /> 
+
+
+<!-- submit javascript put pay claim id here -->
+<input style="visibility:hidden" 
+id="payClaimId"
+type="text"
+th:field="*{payClaimId}" />
+
+
+<!--  submit javascript put payment amount  here -->
+<input style="visibility:hidden" 
+id="paymentAmount"
+type="text"
+th:field="*{paymentAmount}" />   
+
+
+</form>  <!-- end form --> 
+
+<script th:inline = "javascript">
+
+    function toggleStay() {
+
+
+        // we know stay is used if we get here so we do not need the th:if;
+        // we do not need stay literal since we set it here
+        // thus, the bean th:if and th:text are only used for the
+        // button when first displayed. 
+        
+        // warning: all history click handlers should return false
+        // to prevent default browser actions. 
+
+        debugger; 
+        
+        var stayButtonElement = document.getElementById("StayButton");
+        var buttonValue = stayButtonElement.value;
+        var newStayValue = buttonValue.indexOf("on") > -1 ? "stay off" : "stay on";  
+        var newToggleValue = buttonValue.indexOf("on") > -1 ? "off" : "on"; 
+        /* ------------------------------------------------------- */
+        var newStayButton = 
+        '<button '  +   
+           ' class="g4stay btn btn-primary-outline st1a" '  +
+           ' id="StayButton" ' +
+           ' onclick="toggleStay()" ' + 
+           ' value="' + newToggleValue +  '" >' +
+             newStayValue
+        '</button>"';
+        /* -------------------------------------------------------- */ 
+        $('.g4stay').replaceWith(newStayButton);
+
+        /* ------------------------------------------------------------ */
+        /* prevent default browser action by returning false so
+        /* event is handled completely by java script 
+        /* ------------------------------------------------------------ */
+
+        updateSettings("stay", newToggleValue);
+
+        return false; /* <=== prevent browser from doing anything. */
+
+    }
+
+      function toggleFocus() {
+
+
+        // we know stay is used if we get here so we do not need the th:if;
+        // we do not need stay literal since we set it here
+        // thus, the bean th:if and th:text are only used for the
+        // button when first displayed. 
+        
+        // warning: all history click handlers should return false
+        // to prevent default browser actions. 
+
+        debugger; 
+        
+        var focusButtonElement = document.getElementById("FocusButton");
+        var buttonValue = focusButtonElement.value; 
+        var newFocusValue = buttonValue.indexOf("on") > -1 ? "focus off" : "focus on";  
+        var newToggleValue = buttonValue.indexOf("on") > -1 ? "off" : "on"; 
+        /* ------------------------------------------------------- */
+        var newFocusButton = 
+        '<button '  +   
+           ' class="g4focus btn btn-primary-outline st1a" '  +
+           ' id="FocusButton" ' +
+           ' onclick="toggleFocus()" ' + 
+           ' value="' + newToggleValue +  '" >' +
+             newFocusValue
+        '</button>"';
+        /* -------------------------------------------------------- */ 
+        $('.g4focus').replaceWith(newFocusButton);
+
+        /* ------------------------------------------------------------ */
+        /* prevent default browser action by returning false so
+        /* event is handled completely by java script 
+        /* ------------------------------------------------------------ */
+
+        updateSettings("focus", newToggleValue);
+
+        return false; /* <=== prevent browser from doing anything. */
+
+    }
+
+
+    
+function updateSettings(button, newToggleValue) {
+
+            /* store settigns in bean for next screen load initial values of 
+               the buttons. */
+
+            debugger;
+
+            try {
+ 
+            var base = location.origin;
+
+            var url = base + "/settings?name=" + button + "&state=" + newToggleValue;
+
+            console.log("ajax url: " + url);
+
+                    $.ajax({
+
+                        type: "GET",
+                        url: url,
+                        async: true,  
+                        contentType: "string",   // send type 
+                        dataType:    "text",     // return type
+                        success: function() {
+
+                            // console.log("ajax ok result");
+                        },
+                        error: function(Error) {
+
+                            console.log("ajax error function: ");
+                            for(let p in Error) {
+
+                                console.log(p + " : " + Error[p]);
+
+                            }
+                        } 
+                    }); 
+
+            } catch(Error) { 
+
+                console.log("ajax failure catcher  : " + Error); 
+                console.log("ajax error function: ");
+                for(let p in Error) {
+
+                    console.log(p + " : " + Error[p]);
+
+                }
+
+            }  
+  }
+
+</script>
+</body>
+</html>
     
     

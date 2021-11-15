@@ -21,7 +21,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import p20.e10insurance.e10insurance.Beans.SessionBean;
+import p20.e10insurance.e10insurance.Beans.HistoryOperationBean;
+import p20.e10insurance.e10insurance.Beans.SessionBean;  
 import p20.e10insurance.e10insurance.Models.Claim; 
 import p20.e10insurance.e10insurance.Models.History;
 import p20.e10insurance.e10insurance.PassedParameters.PayData;
@@ -35,7 +36,7 @@ public class HistoryController {
      String urlPrefix;
 
      @Autowired
-     private SessionBean sessionBean;   
+     private SessionBean sessionBean;    
 
      @Autowired
      RestTemplate restTemplate;
@@ -48,6 +49,9 @@ public class HistoryController {
 
      @Autowired
      PayData payData;
+
+     @Autowired
+     HistoryOperationBean historyOperationBean;
  
      
     @RequestMapping(value = "/history", method = RequestMethod.GET)
@@ -126,11 +130,19 @@ public class HistoryController {
              return "layout";
         }
 
+        var focusedClaimId = historyOperationBean.getFocusClaim(); // from adjust or pay process
+        var environmentFocusVariableOn = historyOperationBean.isFocusUsed(); 
+        var screenFocusButtonOn = historyOperationBean.isFocusOn();
+
         Claim[] claims = response.getBody(); 
  
 
         for(Claim c : claims)
         {
+
+            // trim claim id - for screen html compares 
+            c.setClaimIdNumber(c.getClaimIdNumber().trim());
+
             var date = c.getDateService();
             String d = formatDate(date);
             c.setDateService(d);
@@ -167,9 +179,38 @@ public class HistoryController {
             {
                 c.setService("was null");
             }
+
+            // mark focused claim if:
+            //  o focus environment variable is set Y
+            //  o screen focus button set to 'focus on'
+            //  o this claim matches focus claim id set on adjustment or pay routines
+
+          
+
+              var claimId =  c.getClaimIdNumber().toString().trim();
+
+            /* var p = "cur-claim: " + claimId + 
+            " focused-claim: " + focusedClaimId + 
+            " focus-button: " + screenFocusButtonOn + 
+            " env-focus-on: " + environmentFocusVariableOn;
+
+            System.out.println(p); */
+
+            if(focusedClaimId.equals(claimId) 
+            &&
+            screenFocusButtonOn
+            &&
+            environmentFocusVariableOn)
+            {
+                //System.out.println("focused on this claim: " + claimId);
+                c.setFocused(true);
+            }
+          
  
         } 
  
+        // reset focused claim id off
+        historyOperationBean.setFocusClaim("");
 
         // load screen display object - history 
         history.setHistoryClaims(claims);
@@ -257,9 +298,39 @@ public class HistoryController {
               }
 
               var message = "Claim " + payClaimId + " Paid."; 
-              sessionBean.SetMessage(message); 
-              return "redirect:/history"; 
-        }
+              sessionBean.SetMessage(message);  
+              
+               // set focus claim id
+               historyOperationBean.setFocusClaim(payClaimId);
+
+               // set Action for history screen
+               historyOperationBean.setAction("payment", payClaimId);
+
+               // check Stay value and return to histroy if 'stay on'
+               var stayOnHistorySelected = historyOperationBean.isStayOn();
+               if(stayOnHistorySelected)
+               {
+                  // go back to history if stay is on.
+                  return "redirect:/history";
+               }  
+              return "redirect:/menu"; 
+        } 
+        
+         /* --stay action
+        if(buttonAction.equals("Stay"))
+        { 
+            // update settings and return to history
+            historyOperationBean.toggleStay(); 
+            return "redirect:/history";
+        } */
+        
+        /* --focus action
+        if(buttonAction.equals("Focus"))
+        { 
+              update settings and return to history
+            historyOperationBean.toggleFocus();
+            return "redirect:/history"; 
+        } */
 
         // should not get here
         var message = "action of :" + buttonAction + " is incorrect.";

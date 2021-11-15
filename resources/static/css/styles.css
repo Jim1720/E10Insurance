@@ -101,6 +101,12 @@
 
    .navMsg { color: goldenrod; font-family: Arial; font-size: x-large }
 
+   .st1a { font-family: Arial;
+      font-size: larger;
+      margin: 2px;
+      font-size:  larger;
+      background-color: black;  }  
+
 /* display link tag list items inline */
 
 li  { display: inline; }
@@ -146,3 +152,119 @@ a { color:white; font-family: Arial; font-size:medium;}
 .borders1 {  border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: lightgray; }
 
 .r1 { border-radius:25px }
+
+/* history classes for colors */
+
+.white { color: white}
+.gold  { color: gold }
+.dodgerblue { color: dodgerblue }
+.burleywood { color: burlywood }
+
+
+.g1menu {
+   color: aqua;
+   border-color: white;
+   margin-left: 20px;
+}
+
+.g2pay {
+   color: yellow;
+   border-color: white;
+   margin-left: 20px;
+}
+
+.g3adjust {
+   color: red;
+   border-color: white;
+   margin-left: 20px;
+}
+
+.g4stay {
+   color: lightgreen;
+   border-color: white;
+   margin-left: 20px;
+}
+
+
+.g4 {
+   color: lightgreen;
+   border-color: white;
+   margin-left: 20px;
+}
+
+
+.g4focus {
+   color: burlywood;
+   border-color: white;
+   margin-left: 20px;
+}
+
+
+.g4top {
+   color: lightgreen;
+   border-color: white;
+   margin-left: 20px;
+}
+
+
+.g4mid {
+   color: burlywood;
+   border-color: white;
+   margin-left: 20px;
+}
+
+
+.g4bot {
+   color: lightcoral;
+   border-color: white;
+   margin-left: 20px;
+}
+
+
+.g4focus {
+   color: burlywood;
+   border-color: white;
+   margin-left: 20px;
+}
+
+
+
+.g5new {
+   color: burlywood;
+   border-color: white;
+   margin-left: 20px;
+}
+
+
+
+
+.g5act1 {
+   color: burlywood;
+   border-color: white;
+   margin-left: 20px;
+}
+
+
+.g5act2 {
+   color: burlywood;
+   border-color: white;
+   margin-left: 20px;
+}
+
+
+.g4adjust {
+   color: gold;
+   border-color: white;
+   margin-left: 20px;
+}
+ 
+
+.g4pay {
+   color: red;
+   border-color: white;
+   margin-left: 20px;
+}
+
+html {
+   scroll-behavior: smooth;
+}

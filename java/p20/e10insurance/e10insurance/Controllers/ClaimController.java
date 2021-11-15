@@ -24,6 +24,7 @@ import org.springframework.web.client.RestTemplate;
  
 import p20.e10insurance.e10insurance.Beans.CustomerBean;
 import p20.e10insurance.e10insurance.Beans.EditBean;
+import p20.e10insurance.e10insurance.Beans.HistoryOperationBean;
 import p20.e10insurance.e10insurance.Beans.ServiceBean;
 import p20.e10insurance.e10insurance.Beans.SessionBean;
 import p20.e10insurance.e10insurance.Models.Claim;
@@ -49,6 +50,9 @@ public class ClaimController {
 
      @Autowired
      private CustomerBean customerBean;
+
+     @Autowired
+     private HistoryOperationBean historyOperationBean;
 
 
      @Autowired
@@ -354,8 +358,8 @@ public class ClaimController {
         message += editBean.CheckData(clinic,"Clinic",EditBean.dataFieldRequirements.addr2);
 
         // all numeric 
-        message += editBean.CheckData(procedure1,"Procedure",EditBean.dataFieldRequirements.allnumeric); 
-        message += editBean.CheckData(diagnosis1,"Diagnosis",EditBean.dataFieldRequirements.allnumeric);
+        message += editBean.CheckData(procedure1,"Procedure",EditBean.dataFieldRequirements.name1); 
+        message += editBean.CheckData(diagnosis1,"Diagnosis",EditBean.dataFieldRequirements.name1);
  
         var dateService = claim.getDateService(); 
         String forDatabaseServiceDate = "";
@@ -659,6 +663,20 @@ public class ClaimController {
                   sessionBean.SetMessage("Claim " + adjustingId + " adjusted " + adjustedId + ".");
                   //sessionBean.SetRedirect("/menu");  
                   //return "layout"; 
+
+                  // set focus claim id
+                  historyOperationBean.setFocusClaim(adjustingId);
+
+                  // set Action for history screen
+                  historyOperationBean.setAction("adjustment", adjustingId);
+
+                  // check Stay value and return to histroy if 'stay on'
+                  var stayOnHistorySelected = historyOperationBean.isStayOn();
+                  if(stayOnHistorySelected)
+                  {
+                     // go back to history if stay is on.
+                     return "redirect:/history";
+                  }  
                    return "redirect:/menu";
   
 
