@@ -1,5 +1,5 @@
 package p20.e10insurance.e10insurance.Controllers;
- 
+  
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -132,7 +132,7 @@ public class HistoryController {
 
         var focusedClaimId = historyOperationBean.getFocusClaim(); // from adjust or pay process
         var environmentFocusVariableOn = historyOperationBean.isFocusUsed(); 
-        var screenFocusButtonOn = historyOperationBean.isFocusOn();
+        var screenFocusButtonOn = historyOperationBean.isFocusOn(); 
 
         Claim[] claims = response.getBody(); 
  
@@ -187,26 +187,22 @@ public class HistoryController {
 
           
 
-              var claimId =  c.getClaimIdNumber().toString().trim();
+            var claimId =  c.getClaimIdNumber().toString().trim(); 
 
-            /* var p = "cur-claim: " + claimId + 
-            " focused-claim: " + focusedClaimId + 
-            " focus-button: " + screenFocusButtonOn + 
-            " env-focus-on: " + environmentFocusVariableOn;
-
-            System.out.println(p); */
+            Boolean normalFocusUsed = screenFocusButtonOn && environmentFocusVariableOn;
+            Boolean payResetFocusUsed = historyOperationBean.isPayResetFocusedUsed(); 
 
             if(focusedClaimId.equals(claimId) 
             &&
-            screenFocusButtonOn
-            &&
-            environmentFocusVariableOn)
-            {
-                //System.out.println("focused on this claim: " + claimId);
-                c.setFocused(true);
-            }
-          
- 
+            (normalFocusUsed || payResetFocusUsed) )
+            { 
+               
+                c.setFocused(true); 
+                if(payResetFocusUsed)
+                {
+                    historyOperationBean.setPayResetFocusUsed(false);
+                }  
+            } 
         } 
  
         // reset focused claim id off
@@ -265,11 +261,14 @@ public class HistoryController {
             return "layout";
         } 
 
-        var buttonAction = history.getButtonAction();
+        var buttonAction = history.getButtonAction(); 
+        
 
         if(buttonAction.equals(""))
         {
             // when invalid value keyed...
+
+            // use focus so we can reposition at the claim being paid...
             sessionBean.SetRedirect("/history");
             return "layout";
         }
@@ -283,6 +282,32 @@ public class HistoryController {
             // here we call a controler to process the adjustment 
             return "redirect:/adjustment";
         } 
+
+        if(buttonAction.equals("PayReset"))
+        {
+            /* called from java script pay button logic
+               when payment invalid or payment is cancelled.
+               Java script clicks hidden id="PayReset"
+               button so form will be reloaded and positioned
+               at at the claim being paid using the focus logic.
+
+               fix for: form was blanking data out after these actions.
+            */ 
+          
+            // focusing ...
+            var payClaimId = history.getPayClaimId();
+            
+            // set focus claim id to claim customer trying to pay...
+            historyOperationBean.setFocusClaim(payClaimId);
+
+            // trigger focus for this case: pay cancel or pay bad amount
+            historyOperationBean.setPayResetFocusUsed(true);
+
+            // back to history ... with focus in mind.
+            //sessionBean.SetRedirect("/history");   /* to use focus logic */
+            //return "layout";
+            return "redirect:/history"; 
+        }
       
 
         if(buttonAction.equals("Paying"))

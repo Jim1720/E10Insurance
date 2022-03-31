@@ -1,6 +1,9 @@
  
     // claimpage.js
 
+    /* important: all history handlers must return false to provent
+       default browser action i.e. submit so click button logic can function properly.
+
     /*
 
     uses: claiom screen - show hide fields and buttons by type selcted
@@ -19,10 +22,11 @@
 
     // the event listeners for the combo boxes will be added
     // on claim page load and then unloaded later.
-
-    // needed to use window.onLoad to get fields like
+    
     // id="haveColors" to be defined. 
 
+
+    // needed to use window.onLoad to get fields like
     window.onload = function() {
 
         // check if on claim, plan, or history screens.
@@ -176,15 +180,14 @@
          }); 
         } 
 
-        if(onHistoryScreen) // Adjust Claim
-        {
-            // listener for adjustment button click
-            document.addEventListener('click', function(event) {
+        if(onHistoryScreen) // Adjust Claim  
+        {  
+             // listener for adjustment button click
+             document.addEventListener('click', function(event) {
 
                 // check for adjustment submit button
-                var elementId = event.target.id;
-                if(elementId != "adjust") return;
-
+                var elementId = event.target.id;   
+                if(elementId != "adjust") return false; 
              
                 var action = event.target.value.substring(0,6);
                 if(action != "Adjust") return; 
@@ -207,14 +210,17 @@
 
         }
 
+
         if(onHistoryScreen) // Pay claim
         {
             // listener for adjustment button click
             document.addEventListener('click', function(event) {
+ 
+                debugger;
 
                 // check for adjustment submit button
                 var elementId = event.target.id;
-                if(elementId != "pay") return; 
+                if(elementId != "pay") return false; 
 
                  
                 var action = event.target.value.substring(0,3);
@@ -225,17 +231,46 @@
                 //alert(" paying " + claimIdToPay);
                 // store claim id in the hidden field
 
+                var CANCELLED_RESPONSE = null;
+                var PAY_RESET = "PayReset";
                 //* popup for payment amount
-                var input = prompt("Enter Payment Amount","");
-                // now edit it.
+                var input = prompt("Enter Payment Amount",""); 
+                debugger; 
+                // was it cancelled
+                if (input === CANCELLED_RESPONSE) {
+                    // user cancelled action.
+                    //alert("payment action cancelled.")  
+                    // reload form data and focus at active claim
+                    alert("debug cancel");
+                    var buttonAction = document.getElementById("buttonAction");
+                    buttonAction.value = PAY_RESET 
+                    var payClaimId = document.getElementById("payClaimId");
+                     // hidden claim id
+                    payClaimId.value = claimIdToPay;
+                    var s = document.getElementsByTagName("form");  
+                    s[0].submit();  
+                    return;
+                }
+
+                // now edit it; if not cancelled...
                 var value = Number.parseFloat(input);
-                if(isNaN(value))
+                if(isNaN(value) && input !== CANCELLED_RESPONSE)
                 {
-                    alert("Sorry, you must enter a valid amount.") 
-                    var s = document.getElementsByTagName("form"); 
-                    s[0].submit();   
+                    alert("Sorry, you must enter a valid amount.")  
+                     // reload form data and focus at active claim
+                     var buttonAction = document.getElementById("buttonAction");
+                     buttonAction.value = PAY_RESET
+                     var payClaimId = document.getElementById("payClaimId");
+                     // hidden claim id
+                     payClaimId.value = claimIdToPay;
+                     // set action on the submit button - route to controller logic  
+                     var s = document.getElementsByTagName("form");  
+                     s[0].submit(); 
+                     return;
                      
                 }
+              
+                // process payment 
                 var amount = parseFloat(input); 
                 //
                 var payClaimId = document.getElementById("payClaimId");
@@ -251,11 +286,64 @@
                 // submit the form
                 var s = document.getElementsByTagName("form"); 
                 s[0].submit();   
+                
         });
 
 
     }
 
+    /* replaced with inline java script on the history html page.
+
+    if(onHistoryScreen) // Stay and Focus button  
+    {  
+         // listener for stay button click
+         document.addEventListener('click', function(event) {
+
+              debugger;   
+              var elementId = event.target.id.toString();
+              var stayOrFocus = elementId == 'StayButton' || elementId == 'FocusButton';
+              if(stayOrFocus == false) { 
+                  return;
+              } 
+              
+             var buttonAction = document.getElementById("buttonAction");
+             buttonAction.value = event.target.value;
+
+             // submit the form
+             var s = document.getElementsByTagName("form"); 
+             s[0].submit(); 
+             
+
+         });
+    } */
+
+
+    
+    if(onHistoryScreen)
+    {
+        // --- document on load --- action ---- 
+        // when history screen loads; look for #focus id tag
+        // when present scroll to that claim.
+
+        //console.log("checking focus tag");
+        var v = document.getElementById("focus"); 
+        if(v === undefined || v === null || v === "")
+        {
+            return false;
+        } 
+        //console.log("focus tag found.");
+        var claimId = $("#focus").attr("Value");
+        //console.log("discovered claim id is: " + claimId);
+        if(claimId === "")
+        {
+            return false;
+        } 
+        //console.log("scrolling ...");
+        debugger;
+        // similar to 60 code.
+        $(window).scrollTop($("*:contains('" + claimId + "'):last").offset().top);
+         
+    }
 
 
         if(onAdmAction)
@@ -289,17 +377,14 @@
         }
 
     };
+ 
 
     function loadFunction() {
 
 
         var hiddenType = "";
 
-        try {
-         
-
-         
-
+        try { 
 
             // first time: hidden type : empty - default to 'm' = medical.
             // second for edit error: set to hidden type  
@@ -652,4 +737,6 @@
              default: break;
          }  
     }
-
+  
+   
+  

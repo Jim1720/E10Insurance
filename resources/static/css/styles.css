@@ -1,5 +1,12 @@
 
    body { background-color: black; color: white;  } 
+
+/* fixed links at top on history screen */
+
+.isfixed { 
+   background-attachment: fixed; z-index: 1; 
+}
+
    
 /* only for alignment */
 
@@ -230,7 +237,7 @@ a { color:white; font-family: Arial; font-size:medium;}
 
 
 .g5new {
-   color: burlywood;
+   color: aqua;
    border-color: white;
    margin-left: 20px;
 }
@@ -267,4 +274,9 @@ a { color:white; font-family: Arial; font-size:medium;}
 
 html {
    scroll-behavior: smooth;
+}
+
+.fixed {
+
+   background-attachment: fixed; z-index: 1;
 }

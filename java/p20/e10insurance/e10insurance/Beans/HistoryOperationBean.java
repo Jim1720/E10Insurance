@@ -49,6 +49,7 @@ public class HistoryOperationBean {
  private boolean focusOn = false;
 
  private String focusClaimId = "";
+ private Boolean payResetFocusedUsed = false;
 
  private List<ActionObject> actionList;
  private String yes = "Y";  
@@ -58,6 +59,18 @@ public class HistoryOperationBean {
 
      actionList = new ArrayList<ActionObject>(); 
 
+ }
+
+ public boolean isPayResetFocusedUsed()
+ {
+     
+     return this.payResetFocusedUsed;
+ }
+
+ public void setPayResetFocusUsed(Boolean value)
+ {
+      
+     this.payResetFocusedUsed = value;
  }
 
  public boolean isStayUsed()
@@ -132,12 +145,14 @@ public class HistoryOperationBean {
   
 
  public void setFocusClaim(String claimId)
- {
+ { 
+     
      this.focusClaimId = claimId;
  }
 
  public String getFocusClaim()
- {
+ { 
+    
      return this.focusClaimId;
  }
  
@@ -191,6 +206,7 @@ public class HistoryOperationBean {
      var act = action.substring(0,3);
      var len = claimId.length();
      var claimSuffix = claimId.substring(len-2);
+     claimSuffix.replace(":","");
      var result = act + '-' + claimSuffix;
      return result;
 
