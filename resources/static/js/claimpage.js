@@ -241,7 +241,7 @@
                     // user cancelled action.
                     //alert("payment action cancelled.")  
                     // reload form data and focus at active claim
-                    alert("debug cancel");
+                    // alert("debug cancel");
                     var buttonAction = document.getElementById("buttonAction");
                     buttonAction.value = PAY_RESET 
                     var payClaimId = document.getElementById("payClaimId");
