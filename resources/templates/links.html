@@ -5,19 +5,33 @@
 
 <style>
     
-    a:hover { color: goldenrod; }  /* highlight link hover to goldenrod */
+    a:hover { color: goldenrod; }  /* highlight link hover to goldenrod */ 
 
-</style> 
+    .bottom-white { border-bottom: 1px white solid;}
+
+    li { margin-left: 55px }
+
+    .stuck {    position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 999;
+                width: 100%;
+                height: 55px;
+            }
  
 
-<div id="onLinks" style="margin-left:120px; margin-right:130px;"> 
+</style>  
+ 
+<body>
+ 
 
     <div th:if="${@sessionBean.GetSignedIn().equals(false)}"> 
 
-        <ul class="black-bar navbar b3-navbar">  
+    <nav class="navbar navbar-dark bg-dark stuck  mb-3 bottom-white">
 
+        <ul> 
             <li><a  class="nav-item" th:href="@{/fullmenu}"
-                    style="font-size: x-large; color:burlywood">E10Insurance</a></li> 
+                    style="font-size: x-large; color:burlywood; margin-left: 140px">E10Insurance</a></li> 
 
             <li><a  class="nav-item  black-bar" th:href="@{/start}">Start</a></li>
                 
@@ -34,13 +48,18 @@
         
         </ul>
 
+    </nav>
+
     </div>
+ 
 
     <div th:if="${@sessionBean.GetSignedIn().equals(true)}"> 
 
-        <ul class="black-bar navbar b3-navbar">  
+    <nav class="navbar navbar-dark bg-dark stuck mb-3 bottom-white">
 
-            <li  class="navbar-brand" style="font-size: x-large; color:burlywood">E10Insurance</li> 
+        <ul>  
+
+            <li  class="la navbar-brand" style="font-size: x-large; color:burlywood">E10Insurance</li> 
 
             <li><a  class="nav-item  black-bar" th:href="@{/menu}">Menu</a></li> 
 
@@ -64,21 +83,20 @@
 
             <li><a  class="nav-item  black-bar" th:href="@{/signout}">Sign Out</a></li> 
 
-            <div th:if="${@sessionBean.GetSignedIn().equals(true)}"> 
+            <!-- div th:if="${@sessionBean.GetSignedIn().equals(true)}"> 
                 <li><a  class="nav-item  black-bar" th:href="@{/menu}"
-                     style="color:burlywood">
-                    <text th:text="${@sessionBean.getCustId()}"></text>
-                    <text> - </text>
+                     style="color:burlywood"> 
                     <text th:text="${@sessionBean.GetCustomerName()}"/>
                 </a></li>
-            </div>
+            </div -->
 
         </ul>
 
+    </nav>
+
     </div>   
 
-
+</body>
     
 </div>
-   
-</div>
+    

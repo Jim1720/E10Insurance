@@ -150,7 +150,7 @@ li  { display: inline; }
 }
 
 /* links */
-.black-bar { background-color: black; font-style:arial; font-size:larger; } 
+.black-bar { width : 100%;  font-style:arial; font-size:larger; } 
 
 /* bottom links on splash */
 
@@ -280,3 +280,9 @@ html {
 
    background-attachment: fixed; z-index: 1;
 }
+
+/* add to all first tags on pages to account for top links spacing */
+
+.d60 { margin-top: 60px; } 
+
+.d75 { margin-top: 75px; }
