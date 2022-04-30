@@ -5,6 +5,12 @@
 <div th:fragment="claim">   
 
 <div class="container">   
+
+        
+<div id="link-adjust" style="margin: 90px">
+
+</div>
+
 <!-- div name="centerStyles" class="centerclaimstyles"-->  
 <div name="addStyles" id="FormStyleClass"  th:class="${@colorBean.getStyleClass()}">
 
@@ -17,8 +23,7 @@
 <div id="labelColor"  th:data-color="${@colorBean.getLabelColor()}"></div> 
 <div id="headerColor" th:data-color="${@colorBean.getHeaderColor()}"></div>  
 <div id="messageColor" th:data-color="${@colorBean.getMessageColor()}"></div>  
-
-    <br> 
+ 
     
     <h2 class='starttitle' style='color: var(--h-color)'>File <th:text="${titleType}"></th:text> Claim</h2><br>
     

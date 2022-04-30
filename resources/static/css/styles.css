@@ -13,20 +13,23 @@
 .bg-style {
   
    margin-left: var(--margin-left);  
-   padding: 40px;
+   padding: 10px 40px 10px 40px
 }
 	  
 .bg-image { margin-left: var(--margin-left);  
-   padding: 40px;
+   margin-top: 10px;
+   padding: 10px 40px 10px 40px;
    background-image : url('../../images/road.jpg');  background-size: 100% 100% }
 
 /* these two classes use css variable */
 
 .bg-outline { width: 1150px; margin-left: var(--margin-left); border-style: solid; border-width: 1px; 
+   margin-top: 10p;
    border-color: var(--user-color);
    padding: 10px 40px 10px 40px  }
 
 .bg-solid { width: 1150px; margin-left: var(--margin-left); background-color : var(--user-color);
+           margin-top: 1-px;
            padding: 10px 40px 10px 40px  }
             
  
