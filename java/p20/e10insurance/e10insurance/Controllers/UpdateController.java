@@ -1,6 +1,9 @@
 package p20.e10insurance.e10insurance.Controllers;
  
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -33,8 +36,10 @@ public class UpdateController
     @Value("${E10UrlPrefix:notSet}")
     String urlPrefix;
 
-    @Value("${E10EmailList:notSet}")
-    String ValidEmails;
+   
+    // was E10EmailList now E10EmailPattern
+    @Value("${E10EmailPattern:notSet}")
+    String emailPattern;
 
     @Autowired
     private SessionBean sessionBean;  
@@ -173,13 +178,26 @@ public class UpdateController
         message += editBean.CheckData(custLast,"Last Name",EditBean.dataFieldRequirements.name3);
         message += editBean.CheckData(custMiddle,"MiddleName",EditBean.dataFieldRequirements.mid1);
         message += editBean.CheckData(custPhone,"Phone",EditBean.dataFieldRequirements.phone); 
-
-        var notFound = -1;
-        if(custEmail == null || (ValidEmails.indexOf(custEmail) == notFound))
+ 
+      
+        if (custEmail == null || custEmail == "")
         {
             message += " Email, ";
         }
-      
+        else 
+        {  
+            
+            // matching against emailPattern from
+            // environment variable for
+            // flexability.
+    
+            Pattern p = Pattern.compile(emailPattern);
+            Matcher m = p.matcher(custEmail);
+            if (!m.matches())
+            {
+                message += " Email, ";
+            }
+        }
            
         message += editBean.CheckData(custAddr1,"Address1",EditBean.dataFieldRequirements.name2); 
         message += editBean.CheckData(custAddr2,"Address2",EditBean.dataFieldRequirements.addr2); 

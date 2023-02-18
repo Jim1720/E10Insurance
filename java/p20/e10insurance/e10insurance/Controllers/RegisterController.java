@@ -8,6 +8,8 @@ import  p20.e10insurance.e10insurance.Beans.EditBean;
  
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,8 +46,9 @@ public class RegisterController {
     @Value("${E10Promotion:notSet}")
     String ValidPromotionCode;
 
-    @Value("${E10EmailList:notSet}")
-    String ValidEmails;
+    // was E10EmailList now E10EmailPattern
+    @Value("${E10EmailPattern:notSet}")
+    String emailPattern;
 
     //*-------------------------------------------------
 
@@ -138,10 +141,25 @@ public String RegisterProcess(Model model, @ModelAttribute Customer customer)
     message += editBean.CheckData(custAddr1,"Address1",EditBean.dataFieldRequirements.addr1); 
     message += editBean.CheckData(custAddr2,"Address2",EditBean.dataFieldRequirements.addr2); 
     
-    var notFound = -1;
-    if(custEmail == null || (ValidEmails.indexOf(custEmail) == notFound))
+    //var notFound = -1;
+    // if(custEmail == null || (ValidEmails.indexOf(custEmail) == notFound))
+    if (custEmail == null || custEmail == "")
     {
         message += " Email, ";
+    }
+    else 
+    {  
+        
+        // matching against emailPattern from
+        // environment variable for
+        // flexability.
+
+        Pattern p = Pattern.compile(emailPattern);
+        Matcher m = p.matcher(custEmail);
+        if (!m.matches())
+        {
+            message += " Email, ";
+        }
     }
 
     var forDatabaseBirthDate = "";
